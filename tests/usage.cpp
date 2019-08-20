@@ -3,6 +3,7 @@
 #include "solver.hpp"
 
 int main(){
+	// prepare
 	auto clauses = ClauseSet({
 		{{ Literal{"a", true}, Literal{"b", true}, Literal{"c", true}}},
 		{{ Literal{"a", false}, Literal{"b", true}, Literal{"c", true}}},
@@ -10,7 +11,9 @@ int main(){
 	});
 	bool isSAT;
 	std::vector<ClauseSet> conds;
+	// solve
 	std::tie(isSAT, conds) = solve(clauses);
+	// print
 	std::cout << (isSAT ? "This is SAT" : "This is not SAT") << std::endl;
 	for(auto&& cond : conds){
 		std::cout << "----------" << std::endl;
