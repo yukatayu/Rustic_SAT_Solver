@@ -40,9 +40,7 @@ struct Clause {
 struct ClauseSet{
     std::vector<Clause> clauses;
     std::map<Proposition, bool> defined;
-    ClauseSet(std::vector<Clause> clauses){
-        this->clauses = clauses;
-    }
+    ClauseSet(std::vector<Clause> clauses):clauses(clauses){ }
     void removeClausesWhichHas(const Literal& lit){
         clauses.erase(
             std::remove_if(clauses.begin(), clauses.end(), [&lit](const Clause& clause){

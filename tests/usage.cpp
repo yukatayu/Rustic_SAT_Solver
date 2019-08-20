@@ -9,10 +9,8 @@ int main(){
 		{{ Literal{"a", false}, Literal{"b", true}, Literal{"c", true}}},
 		{{ Literal{"b", false}}},
 	});
-	bool isSAT;
-	std::vector<ClauseSet> conds;
 	// solve
-	std::tie(isSAT, conds) = solve(clauses);
+	auto [isSAT, conds] = solve(clauses);
 	// print
 	std::cout << (isSAT ? "This is SAT" : "This is not SAT") << std::endl;
 	for(auto&& cond : conds){
