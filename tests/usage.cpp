@@ -3,7 +3,11 @@
 #include "solver.hpp"
 
 int main(){
-	auto a = solve(EmptyData());
+	auto clauses = ClauseSet({
+		{{ Literal{"a", true}, Literal{"b", true}, Literal{"c", true}}},
+		{{ Literal{"a", false}, Literal{"b", true}, Literal{"c", true}}},
+		{{ Literal{"b", false}}},
+	});
 	std::cout << "OK" << std::endl;
 }
 

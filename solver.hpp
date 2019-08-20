@@ -1,5 +1,6 @@
 #pragma once
+#include <vector>
 #include "data.hpp"
 
-EmptyData solve(EmptyData);
+std::vector<ClauseSet> solve(ClauseSet);
 
