@@ -4,6 +4,7 @@
 #include <set>
 #include <string>
 #include <algorithm>
+#include <exception>
 
 struct Proposition {
     std::string name;
@@ -42,7 +43,7 @@ struct ClauseSet{
     ClauseSet(std::vector<Clause> clauses){
         this->clauses = clauses;
     }
-    void removeWhichHas(const Literal& lit){
+    void removeClausesWhichHas(const Literal& lit){
         clauses.erase(
             std::remove_if(clauses.begin(), clauses.end(), [&lit](const Clause& clause){
                 return clause.has(lit);
@@ -56,9 +57,20 @@ struct ClauseSet{
     void define(const Proposition& prop, bool value){
         defined[prop] = value;
     }
+    bool isSatisfiable() {
+        return clauses.empty();
+    }
     bool isContradicted(){
         return std::any_of(clauses.begin(), clauses.end(), [](const Clause& clause){
             return clause.isContradicted();
         });
+    }
+    Proposition getOneProposition(){
+        if(clauses.empty())
+            throw std::runtime_error("clauses is empty");
+        auto lit = clauses.begin()->literals;
+        if(lit.empty())
+            throw std::runtime_error("clauses has empty");
+        return lit.begin()->prop;
     }
 };

@@ -8,6 +8,14 @@ int main(){
 		{{ Literal{"a", false}, Literal{"b", true}, Literal{"c", true}}},
 		{{ Literal{"b", false}}},
 	});
-	std::cout << "OK" << std::endl;
+	bool isSAT;
+	std::vector<ClauseSet> conds;
+	std::tie(isSAT, conds) = solve(clauses);
+	std::cout << (isSAT ? "This is SAT" : "This is not SAT") << std::endl;
+	for(auto&& cond : conds){
+		std::cout << "----------" << std::endl;
+		for(auto&& kv : cond.defined)
+			std::cout << kv.first.name << " = " << kv.second << std::endl;
+	}
 }
 

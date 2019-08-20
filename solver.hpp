@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
+#include <tuple>
 #include "data.hpp"
 
-std::vector<ClauseSet> solve(ClauseSet);
+std::tuple<bool, std::vector<ClauseSet>> solve(ClauseSet);
 
