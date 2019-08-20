@@ -4,10 +4,27 @@
 
 int main(){
 	// prepare
+	/**
+	 * A: !B && !C
+	 * B: !A
+	 * C: !B
+	 */
+	/**
+	 * (!A || !B) && (!A || !C) && (B || C || A)
+	 * (!A || !B) && (B || A)
+	 * (!B || !C) && (C || B)
+	 */
 	auto clauses = ClauseSet({
-		{{ Literal{"a", true}, Literal{"b", true}, Literal{"c", true}}},
-		{{ Literal{"a", false}, Literal{"b", true}, Literal{"c", true}}},
-		{{ Literal{"b", false}}},
+		// A
+		{{ "-a"_L, "-b"_L }},
+		{{ "-a"_L, "-c"_L }},
+		{{  "b"_L,  "c"_L,  "a"_L }},
+		// B
+		{{ "-a"_L, "-b"_L }},
+		{{  "b"_L,  "a"_L }},
+		// C
+		{{ "-b"_L, "-c"_L }},
+		{{  "c"_L,  "b"_L }}
 	});
 	// solve
 	auto [isSAT, conds] = solve(clauses);

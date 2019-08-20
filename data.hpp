@@ -30,6 +30,15 @@ struct Literal {
     }
 };
 
+inline Literal operator"" _L(const char* name, std::size_t length){
+    Literal lit{name, false};
+    if(name[0] == '-'){
+        lit.prop.name = name + 1;
+        lit.invert = true;
+    }
+    return lit;
+}
+
 struct Clause {
     std::set<Literal> literals;
     bool has(const Literal& lit) const { return literals.count(lit); }
