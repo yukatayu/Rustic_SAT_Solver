@@ -50,9 +50,8 @@ struct ClauseSet{
             }), clauses.end());
     }
     void removeAll(const Literal& lit){
-        for(Clause& clause : clauses){
+        for(Clause& clause : clauses)
             clause.remove(lit);
-        }
     }
     void define(const Proposition& prop, bool value){
         defined[prop] = value;

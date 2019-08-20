@@ -21,12 +21,10 @@ res_type solve(ClauseSet clauses){
 			break;
 	}
 	// exit
-	if(clauses.isSatisfiable()){
+	if(clauses.isSatisfiable())
 		return res_type{true, {clauses}};
-	}
-	if(clauses.isContradicted()){
+	if(clauses.isContradicted())
 		return res_type{false, {}};
-	}
 	// recursion
 	bool satisfiable[2];
 	std::vector<ClauseSet> conds[2];
