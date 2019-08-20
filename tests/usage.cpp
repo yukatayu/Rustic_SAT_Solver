@@ -15,8 +15,7 @@ int main(){
 	std::cout << (isSAT ? "This is SAT" : "This is not SAT") << std::endl;
 	for(auto&& cond : conds){
 		std::cout << "----------" << std::endl;
-		for(auto&& kv : cond.defined)
+		for(auto&& kv : cond)
 			std::cout << kv.first.name << " = " << kv.second << std::endl;
 	}
 }
-

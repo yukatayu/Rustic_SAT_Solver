@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <exception>
+#include <optional>
 
 struct Proposition {
     std::string name;
@@ -62,12 +63,18 @@ struct ClauseSet{
             return clause.isContradicted();
         });
     }
-    Proposition getOneProposition(){
+    std::optional<Proposition> getOneProposition(){
         if(clauses.empty())
-            throw std::runtime_error("clauses is empty");
+            return {};
         auto lit = clauses.begin()->literals;
         if(lit.empty())
-            throw std::runtime_error("clauses has empty");
+            return {};
         return lit.begin()->prop;
+    }
+    std::optional<Literal> getPrimeLiteral(){
+		for(auto&& clause : clauses)
+			if(clause.isPrime())
+				return *clause.literals.begin();
+        return {};
     }
 };

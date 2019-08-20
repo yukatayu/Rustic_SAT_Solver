@@ -3,5 +3,4 @@
 #include <tuple>
 #include "data.hpp"
 
-std::tuple<bool, std::vector<ClauseSet>> solve(ClauseSet);
-
+std::tuple<bool, std::vector<std::map<Proposition, bool>>> solve(ClauseSet);
