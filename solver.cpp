@@ -8,7 +8,7 @@ res_type solve(ClauseSet clauses){
 	for(;;){
 		if(auto maybePrimeLiteral = clauses.getPrimeLiteral()){
 				auto primeLiteral = maybePrimeLiteral.value();
-				clauses.define(primeLiteral.prop, !primeLiteral.invert);
+				clauses.determine(primeLiteral.prop, !primeLiteral.invert);
 				clauses.removeClausesWhichHas(primeLiteral);
 				primeLiteral.invert = !primeLiteral.invert;
 				clauses.removeAll(primeLiteral);
@@ -16,12 +16,10 @@ res_type solve(ClauseSet clauses){
 	}
 	// exit
 	if(clauses.isSatisfiable())
-		return res_type{true, {clauses.defined}};
+		return res_type{true, {clauses.determined}};
 	if(clauses.isContradicted())
 		return res_type{false, {}};
 	// recursion
-	bool satisfiable[2];
-	std::vector<ClauseSet> conds[2];
 	Proposition splitProp = *clauses.getOneProposition();
 	auto clauses2 = clauses;
 		// recursion 1
@@ -33,7 +31,7 @@ res_type solve(ClauseSet clauses){
 		// merge
 		if(satisfiable_true || satisfiable_false){
 			std::copy(conds_false.begin(), conds_false.end(), std::back_inserter(conds_true));
-			return res_type{satisfiable, conds_true};
+			return res_type{true, conds_true};
 		}
 	// end
 	return res_type{false, {}};

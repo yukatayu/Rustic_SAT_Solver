@@ -49,7 +49,7 @@ struct Clause {
 
 struct ClauseSet{
     std::vector<Clause> clauses;
-    std::map<Proposition, bool> defined;
+    std::map<Proposition, bool> determined;
     ClauseSet(std::vector<Clause> clauses):clauses(clauses){ }
     void removeClausesWhichHas(const Literal& lit){
         clauses.erase(
@@ -61,8 +61,8 @@ struct ClauseSet{
         for(Clause& clause : clauses)
             clause.remove(lit);
     }
-    void define(const Proposition& prop, bool value){
-        defined[prop] = value;
+    void determine(const Proposition& prop, bool value){
+        determined[prop] = value;
     }
     bool isSatisfiable() {
         return clauses.empty();
