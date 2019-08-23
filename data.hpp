@@ -41,9 +41,7 @@ inline Literal operator"" _L(const char* name, std::size_t length){
 
 struct Clause {
     std::set<Literal> literals;
-    bool has(const Literal& lit) const { return literals.count(lit); }
     bool isContradicted() const { return literals.empty(); }
-    bool isPrime() const { return literals.size() == 1; }
     void remove(const Literal& lit){ literals.erase(lit); }
 };
 
@@ -54,7 +52,7 @@ struct ClauseSet{
     void removeClausesWhichHas(const Literal& lit){
         clauses.erase(
             std::remove_if(clauses.begin(), clauses.end(), [&lit](const Clause& clause){
-                return clause.has(lit);
+                return clause.literals.count(lit);
             }), clauses.end());
     }
     void removeAll(const Literal& lit){
@@ -82,7 +80,7 @@ struct ClauseSet{
     }
     std::optional<Literal> getPrimeLiteral(){
 		for(auto&& clause : clauses)
-			if(clause.isPrime())
+			if(clause.literals.size() == 1)
 				return *clause.literals.begin();
         return {};
     }
