@@ -25,6 +25,7 @@ res_type solve(ClauseSet clauses){
 		// recursion 1
 		clauses.clauses.push_back(Clause{{Literal{splitProp, false}}});
 		auto [satisfiable_true, conds_true] = solve(clauses);
+		// NOTE: codes below are not needed if `satisfiable_true` is true.
 		// recursion 2
 		clauses2.clauses.push_back(Clause{{Literal{splitProp, true}}});
 		auto [satisfiable_false, conds_false] = solve(clauses2);
