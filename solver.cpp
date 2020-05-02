@@ -5,14 +5,12 @@ using res_type = std::tuple<bool, std::vector<std::map<Proposition, bool>>>;
 
 res_type solve(ClauseSet clauses){
 	// unit rule
-	for(;;){
-		if(auto maybePrimeLiteral = clauses.getPrimeLiteral()){
-				auto primeLiteral = maybePrimeLiteral.value();
-				clauses.determine(primeLiteral.prop, !primeLiteral.invert);
-				clauses.removeClausesWhichHas(primeLiteral);
-				primeLiteral.invert = !primeLiteral.invert;
-				clauses.removeAll(primeLiteral);
-		} else break;
+	while(auto maybePrimeLiteral = clauses.getPrimeLiteral()){
+		auto primeLiteral = maybePrimeLiteral.value();
+		clauses.determine(primeLiteral.prop, !primeLiteral.invert);
+		clauses.removeClausesWhichHas(primeLiteral);
+		primeLiteral.invert = !primeLiteral.invert;
+		clauses.removeAll(primeLiteral);
 	}
 	// exit
 	if(clauses.isSatisfiable())
